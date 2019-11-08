@@ -3,7 +3,7 @@
 namespace Studio\Totem\Events;
 
 use Studio\Totem\Task;
-use Studio\Totem\Notifications\TaskCompleted;
+use Studio\Totem\Contracts\TaskCompleted;
 
 class Executed extends BroadcastingEvent
 {
@@ -29,7 +29,7 @@ class Executed extends BroadcastingEvent
 
             unlink(storage_path($task->getMutexName()));
 
-            $task->notify(new TaskCompleted($output));
+            $task->notify(app(TaskCompleted::class, ['output' => $output]));
             $task->autoCleanup();
         }
     }

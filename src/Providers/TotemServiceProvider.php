@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Studio\Totem\Contracts\TaskInterface;
+use Studio\Totem\Notifications\TaskCompleted;
 use Studio\Totem\Console\Commands\ListSchedule;
 use Studio\Totem\Console\Commands\PublishAssets;
 use Studio\Totem\Repositories\EloquentTaskRepository;
+use Studio\Totem\Contracts\TaskCompleted as NotificationContract;
 
 class TotemServiceProvider extends ServiceProvider
 {
@@ -72,6 +74,7 @@ class TotemServiceProvider extends ServiceProvider
             PublishAssets::class,
         ]);
 
+        $this->app->bind(NotificationContract::class, TaskCompleted::class);
         $this->app->bindIf('totem.tasks', EloquentTaskRepository::class, true);
         $this->app->alias('totem.tasks', TaskInterface::class);
         $this->app->register(TotemRouteServiceProvider::class);

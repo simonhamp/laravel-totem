@@ -9,8 +9,9 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\NexmoMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;
+use Studio\Totem\Contracts\TaskCompleted as NotificationContract;
 
-class TaskCompleted extends Notification implements ShouldQueue
+class TaskCompleted extends Notification implements ShouldQueue, NotificationContract
 {
     use Queueable;
 
